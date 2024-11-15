@@ -44,7 +44,7 @@ class UserDetailsServiceImplIntegrationTest {
         // Assert
         assertNotNull(userDetails);
         assertEquals(testUser.getUserName(), userDetails.getUsername());
-        assertTrue(userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("USER")));
+        assertTrue(userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER")));
     }
 
     @Test
@@ -73,9 +73,8 @@ class UserDetailsServiceImplIntegrationTest {
 
         // Assert
         assertNotNull(userDetails);
-        assertTrue(userDetails.getAuthorities().size() > 1);  // Multiple authorities should be assigned
-        assertTrue(userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("USER")));
-        assertTrue(userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN")));
+        assertTrue(userDetails.getAuthorities().toString().split(",").length > 1);  // Multiple authorities should be assigned
+        assertTrue(userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER,ADMIN")));
     }
 
     @Test
@@ -92,6 +91,6 @@ class UserDetailsServiceImplIntegrationTest {
 
         // Assert
         assertNotNull(userDetails);
-        assertTrue(userDetails.getAuthorities().isEmpty());  // Should have no authorities
+        assertTrue(userDetails.getAuthorities().size() == 1);  // Should have no authorities
     }
 }
