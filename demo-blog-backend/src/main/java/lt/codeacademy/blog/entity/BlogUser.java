@@ -27,10 +27,13 @@ public class BlogUser {
     private String password;
     @Column(name = "email")
     private String email;
+
     @OneToMany(mappedBy = "blogUser", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<Post> posts;
     @OneToMany(mappedBy = "blogUser", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<Comment> comments;
+    @Column(name = "isblocked")
+    private boolean isBlocked;
 
     public BlogUser() {
     }
@@ -110,5 +113,9 @@ public class BlogUser {
                 ", posts=" + posts.size() +
                 ", comments=" + comments.size() +
                 '}';
+    }
+
+    public void setAccountNonLocked(boolean b) {
+        this.isBlocked = b;
     }
 }
